@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yumora – Food delivered happy</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#ff5a3c;--brand2:#ff9a3c;--ink:#1f2333;--muted:#7a7f92;--bg:#fff8f3;--card:#fff;--line:#f1e6dd;--ok:#22a06b;
+--shadow:0 10px 30px rgba(255,90,60,.12)}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+button{font:inherit;cursor:pointer;border:0}
+header{position:sticky;top:0;z-index:20;background:rgba(255,248,243,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{max-width:1120px;margin:auto;padding:14px 20px;display:flex;align-items:center;gap:14px}
+.logo{font-weight:800;font-size:1.6rem;letter-spacing:-1px;background:linear-gradient(90deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent;display:flex;gap:8px;align-items:center}
+.logo span{-webkit-text-fill-color:initial}
+.sp{flex:1}
+.btn{padding:10px 18px;border-radius:999px;font-weight:600;background:#fff;border:1px solid var(--line);color:var(--ink);transition:.2s}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn.primary{background:linear-gradient(90deg,var(--brand),var(--brand2));color:#fff;border:0}
+.badge{background:#fff;color:var(--brand);border-radius:999px;padding:0 8px;margin-left:6px;font-size:.8rem}
+.hero{max-width:1120px;margin:22px auto 0;padding:0 20px}
+.hero-in{border-radius:28px;padding:46px 40px;color:#fff;position:relative;overflow:hidden;
+background:linear-gradient(120deg,#ff5a3c,#ff9a3c 70%,#ffc46b)}
+.hero-in::after{content:"🍕🍔🍜🍣";position:absolute;right:20px;bottom:-14px;font-size:4.5rem;opacity:.25;letter-spacing:8px}
+.hero h1{font-size:clamp(1.9rem,4vw,3rem);line-height:1.1;font-weight:800;max-width:560px}
+.hero p{margin:12px 0 22px;opacity:.95;max-width:480px}
+.search{display:flex;background:#fff;border-radius:999px;padding:6px;max-width:480px;box-shadow:0 12px 30px rgba(0,0,0,.15)}
+.search input{flex:1;border:0;outline:0;padding:10px 18px;font:inherit;background:none;color:var(--ink)}
+main{max-width:1120px;margin:auto;padding:26px 20px 80px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.chip{padding:8px 18px;border-radius:999px;background:#fff;border:1px solid var(--line);font-weight:500;color:var(--muted)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+h2{font-size:1.3rem;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+.card{background:var(--card);border-radius:22px;overflow:hidden;box-shadow:0 4px 16px rgba(31,35,51,.06);transition:.25s;cursor:pointer}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.thumb{height:130px;display:grid;place-items:center;font-size:3.6rem}
+.card .body{padding:16px 18px 18px}
+.card h3{font-size:1.05rem}
+.meta{color:var(--muted);font-size:.85rem;margin-top:4px}
+.tag{display:inline-block;margin-top:10px;font-size:.75rem;font-weight:600;padding:4px 10px;border-radius:999px;background:#fff1ea;color:var(--brand)}
+.empty{color:var(--muted);padding:40px 0;text-align:center}
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(20,22,35,.5);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.ov.show{display:flex}
+.modal{background:#fff;border-radius:26px;width:min(560px,100%);max-height:88vh;overflow:auto;padding:26px;animation:pop .25s}
+@keyframes pop{from{transform:scale(.95);opacity:0}}
+.mh{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.x{background:#f4f1ee;border-radius:50%;width:34px;height:34px}
+.item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.item:last-child{border:0}
+.ie{font-size:1.8rem;background:#fff4ec;border-radius:14px;width:52px;height:52px;display:grid;place-items:center}
+.item .n{flex:1;font-weight:600}
+.price{color:var(--brand);font-weight:700}
+.add{background:var(--ink);color:#fff;border-radius:999px;padding:8px 16px;font-weight:600}
+/* cart drawer */
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:#fff;z-index:60;padding:24px;box-shadow:-20px 0 50px rgba(0,0,0,.15);transform:translateX(105%);transition:.3s;display:flex;flex-direction:column}
+.drawer.show{transform:none}
+.lines{flex:1;overflow:auto}
+.line{display:flex;align-items:center;gap:10px;padding:10px 0}
+.line .n{flex:1;font-weight:500}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:28px;height:28px;border-radius:50%;background:#fff1ea;color:var(--brand);font-weight:700}
+input.f{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;font:inherit;margin-top:8px;outline:0}
+input.f:focus{border-color:var(--brand)}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:1.1rem;margin:14px 0}
+.full{width:100%;padding:14px}
+/* tracker */
+.steps{display:flex;justify-content:space-between;margin:26px 0 8px;position:relative}
+.steps::before{content:"";position:absolute;top:15px;left:6%;right:6%;height:4px;background:var(--line);border-radius:4px}
+.step{position:relative;text-align:center;flex:1;font-size:.68rem;color:var(--muted);font-weight:500}
+.dot{width:32px;height:32px;border-radius:50%;background:#fff;border:3px solid var(--line);margin:0 auto 6px;display:grid;place-items:center;position:relative;z-index:1;font-size:.85rem}
+.step.done .dot{background:var(--ok);border-color:var(--ok);color:#fff}
+.step.now .dot{border-color:var(--brand);box-shadow:0 0 0 6px #ffe3da}
+.step.done,.step.now{color:var(--ink)}
+.pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:.75rem;font-weight:700;background:#e7f7ef;color:var(--ok)}
+.pill.bad{background:#fde8e8;color:#d33}
+.row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.ord{padding:12px 14px;border:1px solid var(--line);border-radius:14px;margin-top:10px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.ord:hover{border-color:var(--brand)}
+#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,120px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;z-index:99;transition:.3s}
+#toast.show{transform:translate(-50%,0)}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:30px}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <div class="logo"><span>🍜</span>Yumora</div><div class="sp"></div>
+  <button class="btn" id="ordersBtn">My orders</button>
+  <button class="btn primary" id="cartBtn">🛒 Cart<span class="badge" id="cnt">0</span></button>
+</div></header>
+
+<section class="hero"><div class="hero-in">
+  <h1>Crave it. Tap it. Yumora delivers.</h1>
+  <p>Fresh meals from the best kitchens near you, at your door in minutes.</p>
+  <div class="search"><input id="q" placeholder="Search restaurants, cuisines or dishes…"></div>
+</div></section>
+
+<main>
+  <div class="chips" id="chips"></div>
+  <h2 id="ttl">Restaurants near you</h2>
+  <div class="grid" id="grid"></div>
+</main>
+<footer>Made with 🧡 · Yumora</footer>
+
+<div class="ov" id="ov"><div class="modal" id="modal"></div></div>
+<aside class="drawer" id="drawer"></aside>
+<div id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const inr = n => '₹' + Number(n).toLocaleString('en-IN', {maximumFractionDigits: 2});
+const EMOJI = {indian:'🍛', italian:'🍕', chinese:'🥡', japanese:'🍣', mexican:'🌮', burgers:'🍔', dessert:'🍰'};
+const GRAD = ['#ffe3d6,#ffd0b5','#fff0c9,#ffe19c','#e2f5e9,#c4ead2','#e3ebff,#c9d8ff','#fbe3f3,#f5c8e4'];
+const STEPS = [['PLACED','Placed'],['ACCEPTED','Accepted'],['PREPARING','Cooking'],['OUT_FOR_DELIVERY','On the way'],['DELIVERED','Delivered']];
+const em = c => EMOJI[(c||'').toLowerCase()] || '🍽️';
+
+let restaurants = [], cuisine = 'All', cart = {rid:null, rname:'', items:{}}, timer = null;
+try { cart = JSON.parse(localStorage.getItem('yumora-cart')) || cart; } catch(e) {}
+
+async function api(url, opts = {}) {
+  const r = await fetch(url, {headers:{'Content-Type':'application/json'}, ...opts});
+  if (!r.ok) {
+    let m = 'Something went wrong';
+    try { const j = await r.json(); m = j.message || j.error || m; } catch(e) {}
+    throw new Error(m);
+  }
+  return r.json();
+}
+function toast(t) { const e = $('#toast'); e.textContent = t; e.classList.add('show'); setTimeout(() => e.classList.remove('show'), 2400); }
+function modal(html) { $('#modal').innerHTML = html; $('#ov').classList.add('show'); }
+function closeModal() { $('#ov').classList.remove('show'); clearInterval(timer); }
+$('#ov').onclick = e => { if (e.target.id === 'ov') closeModal(); };
+
+/* ---------- restaurants ---------- */
+async function load() {
+  try { restaurants = await api('/api/restaurants'); renderChips(); renderGrid(); }
+  catch(e) { $('#grid').innerHTML = `<p class="empty">Could not load restaurants. Is the server running?</p>`; }
+}
+function renderChips() {
+  const cs = ['All', ...new Set(restaurants.map(r => r.cuisine))];
+  $('#chips').innerHTML = cs.map(c => `<button class="chip ${c===cuisine?'on':''}" data-c="${esc(c)}">${c==='All'?'✨':em(c)} ${esc(c)}</button>`).join('');
+  document.querySelectorAll('.chip').forEach(b => b.onclick = () => { cuisine = b.dataset.c; renderChips(); renderGrid(); });
+}
+function renderGrid() {
+  const q = $('#q').value.trim().toLowerCase();
+  const list = restaurants.filter(r => (cuisine==='All' || r.cuisine===cuisine) &&
+    (!q || (r.name+' '+r.cuisine+' '+r.menu.map(m=>m.name).join(' ')).toLowerCase().includes(q)));
+  $('#grid').innerHTML = list.length ? list.map((r,i) => `
+    <div class="card" data-id="${r.id}">
+      <div class="thumb" style="background:linear-gradient(135deg,${GRAD[i%GRAD.length]})">${em(r.cuisine)}</div>
+      <div class="body"><h3>${esc(r.name)}</h3>
+        <div class="meta">📍 ${esc(r.address)}</div>
+        <span class="tag">${esc(r.cuisine)} · ${r.menu.length} items</span></div>
+    </div>`).join('') : `<p class="empty">No matches. Try another search 🍽️</p>`;
+  document.querySelectorAll('.card').forEach(c => c.onclick = () => openMenu(+c.dataset.id));
+}
+$('#q').oninput = renderGrid;
+
+function openMenu(id) {
+  const r = restaurants.find(x => x.id === id);
+  modal(`<div class="mh"><div><h2 style="margin:0">${em(r.cuisine)} ${esc(r.name)}</h2><div class="meta">${esc(r.cuisine)} · ${esc(r.address)}</div></div>
+    <button class="x" onclick="closeModal()">✕</button></div>
+    ${r.menu.map(m => `<div class="item"><div class="ie">${em(r.cuisine)}</div>
+      <div class="n">${esc(m.name)}<div class="price">${inr(m.price)}</div></div>
+      ${m.available ? `<button class="add" onclick="addItem(${r.id},${m.id})">Add +</button>` : `<span class="meta">Unavailable</span>`}</div>`).join('')}`);
+}
+
+/* ---------- cart ---------- */
+function saveCart() { localStorage.setItem('yumora-cart', JSON.stringify(cart)); $('#cnt').textContent = count(); renderCart(); }
+const count = () => Object.values(cart.items).reduce((s,i) => s + i.qty, 0);
+const sum = () => Object.values(cart.items).reduce((s,i) => s + i.qty * i.price, 0);
+function addItem(rid, mid) {
+  const r = restaurants.find(x => x.id === rid), m = r.menu.find(x => x.id === mid);
+  if (cart.rid && cart.rid !== rid && count() > 0) {
+    if (!confirm(`Your cart has items from ${cart.rname}. Start a new cart from ${r.name}?`)) return;
+    cart = {rid:null, rname:'', items:{}};
+  }
+  cart.rid = rid; cart.rname = r.name;
+  const it = cart.items[mid] || (cart.items[mid] = {id:mid, name:m.name, price:m.price, qty:0});
+  it.qty++; saveCart(); toast(`Added ${m.name} 🎉`);
+}
+function change(mid, d) { const it = cart.items[mid]; it.qty += d; if (it.qty <= 0) delete cart.items[mid]; if (!count()) cart.rid = null; saveCart(); }
+function renderCart() {
+  const items = Object.values(cart.items);
+  $('#drawer').innerHTML = `<div class="mh"><h2 style="margin:0">Your cart</h2><button class="x" onclick="toggleCart(false)">✕</button></div>
+  ${items.length ? `<div class="meta">From <b>${esc(cart.rname)}</b></div>
+    <div class="lines">${items.map(i => `<div class="line"><div class="n">${esc(i.name)}<div class="price">${inr(i.price*i.qty)}</div></div>
+      <div class="qty"><button onclick="change(${i.id},-1)">−</button><b>${i.qty}</b><button onclick="change(${i.id},1)">+</button></div></div>`).join('')}</div>
+    <input class="f" id="cname" placeholder="Your name" value="${esc(localStorage.getItem('yumora-name')||'')}">
+    <input class="f" id="caddr" placeholder="Delivery address">
+    <div class="total"><span>Total</span><span>${inr(sum())}</span></div>
+    <button class="btn primary full" onclick="placeOrder()">Place order</button>`
+  : `<div class="empty lines">Your cart is empty 🛒<br>Pick something delicious!</div>`}`;
+}
+function toggleCart(s) { $('#drawer').classList.toggle('show', s); }
+$('#cartBtn').onclick = () => toggleCart(true);
+
+async function placeOrder() {
+  const name = $('#cname').value.trim(), addr = $('#caddr').value.trim();
+  if (!name || !addr) return toast('Please enter your name and address');
+  try {
+    const o = await api('/api/orders', {method:'POST', body:JSON.stringify({customerName:name, deliveryAddress:addr, restaurantId:cart.rid,
+      items:Object.values(cart.items).map(i => ({menuItemId:i.id, quantity:i.qty}))})});
+    localStorage.setItem('yumora-name', name);
+    cart = {rid:null, rname:'', items:{}}; saveCart(); toggleCart(false); track(o.id);
+  } catch(e) { toast(e.message); }
+}
+
+/* ---------- tracking ---------- */
+async function track(id) {
+  const draw = async () => {
+    let o; try { o = await api('/api/orders/' + id); } catch(e) { return; }
+    const idx = STEPS.findIndex(s => s[0] === o.status), bad = o.status === 'CANCELLED';
+    const next = idx >= 0 && idx < 4 ? STEPS[idx+1][0] : null;
+    modal(`<div class="mh"><div><h2 style="margin:0">Order #${o.id}</h2><div class="meta">${esc(o.restaurant)} · ${esc(o.deliveryAddress)}</div></div>
+      <button class="x" onclick="closeModal()">✕</button></div>
+      <span class="pill ${bad?'bad':''}">${bad ? 'Cancelled' : STEPS[idx][1]}</span>
+      ${bad ? '' : `<div class="steps">${STEPS.map((s,i) => `<div class="step ${i<idx||o.status==='DELIVERED'?'done':i===idx?'now':''}"><div class="dot">${i<idx||o.status==='DELIVERED'?'✓':i+1}</div>${s[1]}</div>`).join('')}</div>`}
+      <div style="margin-top:18px">${o.items.map(i => `<div class="line"><div class="n">${i.quantity}× ${esc(i.name)}</div><div>${inr(i.unitPrice*i.quantity)}</div></div>`).join('')}
+      <div class="total"><span>Total</span><span>${inr(o.total)}</span></div></div>
+      <div class="row">
+        ${next ? `<button class="btn primary" onclick="advance(${o.id},'${next}')">Demo: mark “${STEPS[idx+1][1]}”</button>` : ''}
+        ${['PLACED','ACCEPTED'].includes(o.status) ? `<button class="btn" onclick="advance(${o.id},'CANCELLED')">Cancel order</button>` : ''}
+      </div>`);
+  };
+  await draw(); clearInterval(timer); timer = setInterval(draw, 5000);
+}
+async function advance(id, status) {
+  try { await api(`/api/orders/${id}/status`, {method:'PATCH', body:JSON.stringify({status})}); track(id); }
+  catch(e) { toast(e.message); }
+}
+
+/* ---------- order history ---------- */
+$('#ordersBtn').onclick = () => {
+  modal(`<div class="mh"><h2 style="margin:0">My orders</h2><button class="x" onclick="closeModal()">✕</button></div>
+    <div style="display:flex;gap:8px"><input class="f" id="who" style="margin:0" placeholder="Enter your name" value="${esc(localStorage.getItem('yumora-name')||'')}">
+    <button class="btn primary" onclick="history_()">Find</button></div><div id="hist"></div>`);
+  if (localStorage.getItem('yumora-name')) history_();
+};
+async function history_() {
+  const n = $('#who').value.trim(); if (!n) return;
+  try {
+    const os = await api('/api/orders?customer=' + encodeURIComponent(n));
+    $('#hist').innerHTML = os.length ? os.map(o => `<div class="ord" onclick="track(${o.id})"><div><b>#${o.id} · ${esc(o.restaurant)}</b>
+      <div class="meta">${o.items.length} item(s) · ${inr(o.total)}</div></div><span class="pill ${o.status==='CANCELLED'?'bad':''}">${o.status.replace(/_/g,' ')}</span></div>`).join('')
+      : `<p class="empty">No orders yet for “${esc(n)}”.</p>`;
+  } catch(e) { toast(e.message); }
+}
+
+$('#cnt').textContent = count(); renderCart(); load();
+</script>
+</body>
+</html>
